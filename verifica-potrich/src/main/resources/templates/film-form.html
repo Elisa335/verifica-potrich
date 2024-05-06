@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="col-3">
+        <form method="post" th:action="@{/films/nuovo}" th:object="${filmForm}"> 
+            <h2>Aggiungi un film</h2>
+            <div>
+                <label>Titolo</label>
+                <input th:field="*{titolo}" type="text"/>
+
+                <!-- controlli del validator -->
+                <div th:if="${#fields.hasErrors('titolo')}">
+                    <span th:errors="*{titolo}" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div>
+                <label>Genere</label>
+                <select th:field="*{genere}" name="genere">
+                    <!-- <option disabled selected value> -- seleziona un'opzione -- </option>--> <!-- DA SISTEMARE-->
+                    <option th:each="g : ${T(it.marconi.verificapotrich.domains.GenereEnum).values()}" 
+                        th:value="${g}" th:text="${g}"></option>
+                </select>
+            </div>
+
+            <div>
+                <label>Anno</label>
+                <!-- type="tel" pattern="[0-9]{10}"-->
+                <input th:field="*{anno}" type="text"/> 
+
+                <div th:if="${#fields.hasErrors('anno')}">
+                    <span th:errors="*{anno}" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div>
+                <label>Voto</label>
+                <input th:field="*{voto}" type="text"/>
+
+                <!--
+                <select th:field="*{voto}" name="voto">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="4">5</option>
+                </select>
+
+                -->
+
+                <div th:if="${#fields.hasErrors('voto')}">
+                    <span th:errors="*{voto}" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div>
+                <input class="btn btn-success" type="submit" value="Conferma"/>
+                <input class="btn btn-secondary" type="reset" value="Svuota"/>
+                <a th:href="@{/contacts}" class="btn btn-primary">Indietro</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
